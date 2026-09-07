@@ -1,0 +1,23 @@
+# never commit logged-in browser sessions
+browser_profiles/
+comfy_nodes/ai_studio_h3_prompt/vendor/browser_profiles/
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# model weights
+*.safetensors
+*.ckpt
+*.pt
+*.gguf
+*.bin
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

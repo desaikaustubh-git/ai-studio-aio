@@ -1,0 +1,327 @@
+{
+  "id": "a7f1c2d0-9b34-4e55-8c21-6d0f5a1b2c3d",
+  "revision": 0,
+  "last_node_id": 301,
+  "last_link_id": 9,
+  "nodes": [
+    {
+      "id": 194,
+      "type": "UNETLoader",
+      "pos": [-1032, 217],
+      "size": [495, 82],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "MODEL", "type": "MODEL", "links": [1] }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76",
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "default"
+      ],
+      "color": "#f66744",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 195,
+      "type": "CLIPLoader",
+      "pos": [-1032, 335],
+      "size": [495, 106],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "CLIP", "type": "CLIP", "links": [2] }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "minimax",
+        "default"
+      ],
+      "color": "#f66744",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 196,
+      "type": "VAELoader",
+      "pos": [-1032, 477],
+      "size": [495, 58],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "VAE", "type": "VAE", "links": [3] }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_video_vae_fp16.safetensors"
+      ],
+      "color": "#f66744",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 213,
+      "type": "VAELoader",
+      "pos": [-1032, 571],
+      "size": [495, 58],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "VAE", "type": "VAE", "links": [4] }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_fp32.safetensors"
+      ],
+      "color": "#f66744",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 223,
+      "type": "PixaromaSizes",
+      "pos": [-508, 217],
+      "size": [240, 534],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "width", "type": "INT", "links": [5] },
+        { "name": "height", "type": "INT", "links": [6] }
+      ],
+      "title": "1. Pick Orientation and Size",
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "a13e16f26ce1b1de096fe97ded9b95ec3d2b62ab",
+        "Node name for S&R": "PixaromaSizes",
+        "sizesState": "{\"version\":1,\"sizes\":[[608,352],[736,416],[864,480],[960,544],[1056,608],[1152,640],[1216,672],[1280,736],[1344,768],[1376,768],[1504,832],[1664,928],[1824,1024],[1920,1088]],\"selected\":8,\"orientation\":\"landscape\",\"snap\":32,\"accent\":null,\"collapsed\":false,\"starred\":[\"480x864\",\"768x1344\",\"1344x768\"],\"w\":1344,\"h\":768}"
+      },
+      "widgets_values": [
+        {
+          "version": 1,
+          "sizes": [
+            [608, 352], [736, 416], [864, 480], [960, 544], [1056, 608],
+            [1152, 640], [1216, 672], [1280, 736], [1344, 768], [1376, 768],
+            [1504, 832], [1664, 928], [1824, 1024], [1920, 1088]
+          ],
+          "selected": 8,
+          "orientation": "landscape",
+          "snap": 32,
+          "accent": null,
+          "collapsed": false,
+          "starred": ["480x864", "768x1344", "1344x768"],
+          "w": 1344,
+          "h": 768
+        }
+      ],
+      "color": "#14436c",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 234,
+      "type": "PixaromaDuration",
+      "pos": [-244, 217],
+      "size": [495, 80],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "frames", "type": "INT", "links": [7] },
+        { "name": "seconds", "type": "FLOAT", "links": null }
+      ],
+      "title": "2. Select Per-Shot Duration",
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "c6efed39bfc2e566fc5542044d728cca7d2e1a62",
+        "Node name for S&R": "PixaromaDuration",
+        "durationState": {
+          "seconds": 5,
+          "fps": 24,
+          "step": 17,
+          "plus": 5,
+          "minFrames": 5,
+          "mode": "recipe",
+          "formula": "",
+          "pick": "chips",
+          "values": [3, 4, 5, 6, 7, 8, 9, 10, 12, 15],
+          "min": 1,
+          "max": 10,
+          "stepSec": 0.5,
+          "recipeName": "MiniMax H3"
+        }
+      },
+      "widgets_values": [],
+      "color": "#14436c",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 301,
+      "type": "AIStudioH3MultiShotRender",
+      "pos": [-244, 340],
+      "size": [470, 540],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        { "name": "model", "type": "MODEL", "link": 1 },
+        { "name": "clip", "type": "CLIP", "link": 2 },
+        { "name": "vae", "type": "VAE", "link": 3 },
+        { "name": "audio_vae", "type": "VAE", "link": 4 },
+        { "name": "width", "type": "INT", "widget": { "name": "width" }, "link": 5 },
+        { "name": "height", "type": "INT", "widget": { "name": "height" }, "link": 6 },
+        { "name": "frames_per_shot", "type": "INT", "widget": { "name": "frames_per_shot" }, "link": 7 }
+      ],
+      "outputs": [
+        { "name": "frames", "type": "IMAGE", "links": [8] },
+        { "name": "audio", "type": "AUDIO", "links": [9] },
+        { "name": "info", "type": "STRING", "links": [] }
+      ],
+      "title": "Plan + render all shots",
+      "properties": {
+        "Node name for S&R": "AIStudioH3MultiShotRender"
+      },
+      "widgets_values": [
+        1344,
+        768,
+        73,
+        "An investigator wearing heavy futuristic tactical gear stood inside a dark, silent room where a single drop of dark red blood hung completely frozen mid-air. The space was under the influence of a level four Chrono-Stab incident, meaning everything inside the heat distortion field moved at a mere one percent of normal speed. Navigating around suspended glass shards, the investigator watched the victim's face slowly, agonizingly contort in continuous pain as the stabbing motion played out over hours. Checking his wrist-mounted temporal meter device, the investigator's voice cracked with panic as the radius indicator began expanding rapidly from ten feet to fifteen. Without warning, the shimmering chrono-bubble snapped outward, engulfing the investigator and plunging his surroundings into an absolute, dead silence. His movements dropped to a hundred times slower than normal, leaving him trapped in extreme slow motion as normal-speed paramedics entered the room outside the field.",
+        "chatgpt",
+        5.0,
+        8,
+        2,
+        "",
+        0,
+        20,
+        1.0,
+        "res_multistep",
+        "simple",
+        1.0,
+        "qwen3:32b",
+        "http://127.0.0.1:11434",
+        "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "",
+        300,
+        0,
+        "",
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 228,
+      "type": "PixaromaSaveMp4",
+      "pos": [320, 217],
+      "size": [440, 640],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        { "name": "video_frames", "type": "IMAGE", "link": 8 },
+        { "name": "audio", "shape": 7, "type": "AUDIO", "link": 9 }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "a13e16f26ce1b1de096fe97ded9b95ec3d2b62ab",
+        "Node name for S&R": "PixaromaSaveMp4",
+        "pixMp4Video": {
+          "filename": "Lengthy_00001.mp4",
+          "subfolder": "",
+          "type": "output"
+        }
+      },
+      "widgets_values": [24, "Lengthy", "save", false, ""],
+      "color": "#1d1d1d",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 235,
+      "type": "PixaromaRunTimer",
+      "pos": [320, 900],
+      "size": [139, 50],
+      "flags": { "no_title": true },
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "13f9d5d1da21e09515a5843e9392c3f69a435297",
+        "Node name for S&R": "PixaromaRunTimer",
+        "runTimerState": {
+          "version": 1,
+          "color": "#f66744",
+          "decimals": 0,
+          "chime": true,
+          "sound": "",
+          "volume": 0
+        }
+      },
+      "widgets_values": [],
+      "color": "#1d1d1d",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 240,
+      "type": "Note",
+      "pos": [-1032, 660],
+      "size": [495, 300],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "H3 Multi-Shot Lengthy Video (fl2va)\n\n1. Pick size (node 1) and per-shot length (node 2). frames_per_shot feeds the render node; total video length = frames_per_shot x number of shots.\n2. In 'Plan + render all shots': paste the WHOLE script into `script`. One LLM call splits it into an ordered shot plan - each shot is a full H3 prompt plus a `continuation` flag:\n   - false = fresh cut, text-to-video only\n   - true  = same take, rendered starting from the previous shot's last frame\n3. Queue. Shots render one by one in this node, then concatenate into one IMAGE+AUDIO -> SaveMp4 (output/Lengthy_00001.mp4).\n\n- max_shots caps the plan. min_shots is the lower bound the planner aims for.\n- seed 0 = random base seed each run; set a value for a repeatable render (shot N uses base+N).\n- plan_override: paste a JSON array of shots to re-render a hand-tuned plan with NO LLM call.\n- backend chatgpt opens a Chromium window once for the plan; ollama is fully local.\n- Heavy: every shot's frames sit in RAM until the final concat/save."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [1, 194, 0, 301, 0, "MODEL"],
+    [2, 195, 0, 301, 1, "CLIP"],
+    [3, 196, 0, 301, 2, "VAE"],
+    [4, 213, 0, 301, 3, "VAE"],
+    [5, 223, 0, 301, 4, "INT"],
+    [6, 223, 1, 301, 5, "INT"],
+    [7, 234, 0, 301, 6, "INT"],
+    [8, 301, 0, 228, 0, "IMAGE"],
+    [9, 301, 1, 228, 1, "AUDIO"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.75,
+      "offset": [1400, 120]
+    }
+  },
+  "version": 0.4
+}

@@ -1,0 +1,176 @@
+{
+  "id": "c5beec59-2b88-4f3f-ba35-7640a58a9ba6",
+  "revision": 0,
+  "last_node_id": 235,
+  "last_link_id": 287,
+  "nodes": [
+    {
+      "id": 219,
+      "type": "PixaromaNote",
+      "pos": [
+        -1610.0066125873575,
+        223.3824473224962
+      ],
+      "size": [
+        553.234154978318,
+        556
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "1227d9898f9d5137533df750611ca97e8c738f3d",
+        "Node name for S&R": "PixaromaNote"
+      },
+      "widgets_values": [
+        "{\"version\":1,\"content\":\"<h1>MODELS AND NODES USED IN THIS WORKFLOW</h1>\\n\\n<hr class=\\\"pix-note-hr-solid\\\" style=\\\"color: #b8b8b8\\\">\\n\\n<h2><span data-ic=\\\"CLIP\\\" class=\\\"pix-note-ic\\\" contenteditable=\\\"false\\\" style=\\\"color: #f66744\\\"></span>&nbsp;Load CLIP</h2>\\n\\n<p>\\n<span class=\\\"pix-note-btnblock\\\"><a class=\\\"pix-note-dl\\\" style=\\\"background-color: #f66744\\\" href=\\\"https://huggingface.co/DreamFast/Qwen3-VL-8B-Heretic-1.3.0/resolve/main/comfyui/qwen3-vl-8b-heretic-1.3.0_fp8_e4m3fn.safetensors\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">Download qwen3-vl-8b-heretic-1.3.0_fp8_e4m3fn<span class=\\\"pix-note-btnsize\\\">10 GB</span></a></span>&nbsp;\\n</p>\\n\\n<div class=\\\"pix-note-folderhint\\\" style=\\\"color: #f66744\\\">Place in: ComfyUI/models/text_encoders<br><br><span class=\\\"pix-note-btnblock\\\"><a class=\\\"pix-note-vp\\\" style=\\\"background-color: #f66744\\\" href=\\\"https://huggingface.co/DreamFast/Qwen3-VL-8B-Heretic-1.3.0/tree/main/comfyui\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">More Versions</a></span>&nbsp;<br><br><span class=\\\"pix-note-btnblock\\\"><a class=\\\"pix-note-dl\\\" style=\\\"background-color: #f66744\\\" href=\\\"https://huggingface.co/craftingmod/Qwen3-VL-8B-Heretic-INT8/resolve/main/qwen3-vl-8b-heretic-1.3.0-int8convrot.safetensors?download=true\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">Download INT8 Model</a></span>&nbsp;</div>\\n\\n<p><span data-ic=\\\"chip\\\" class=\\\"pix-note-ic\\\" contenteditable=\\\"false\\\" style=\\\"color: #f66744\\\"></span>&nbsp;<b>GPU note:</b> This model needs about <b>12 GB of VRAM</b>. FP8 is generally the better/faster option on NVIDIA RTX 40 and 50 series GPUs. INT8 may perform better on RTX 30 series GPUs, and is slightly less consistent: if a result comes out wrong, roll a new seed and run it again.</p>\\n\\n<hr class=\\\"pix-note-hr-solid\\\" style=\\\"color: #b8b8b8\\\">\\n\\n<p><span data-ic=\\\"warning-v1\\\" class=\\\"pix-note-ic\\\" contenteditable=\\\"false\\\" style=\\\"color: #f66744\\\"></span>&nbsp;After placing the files, restart ComfyUI or refresh model lists using the <b>R</b> shortcut.</p>\\n\\n<hr class=\\\"pix-note-hr-solid\\\" style=\\\"color: #b8b8b8\\\">\\n\\n<h2><span data-ic=\\\"nodes-installed\\\" class=\\\"pix-note-ic\\\" contenteditable=\\\"false\\\" style=\\\"color: #f66744\\\"></span>&nbsp;Nodes Installed from Manager</h2>\\n\\n<ul>\\n  <li>Pixaroma</li>\\n</ul>\\n\\n<hr class=\\\"pix-note-hr-solid\\\" style=\\\"color: #b8b8b8\\\">\\n\\n<h2><span data-ic=\\\"pixaroma\\\" class=\\\"pix-note-ic\\\" contenteditable=\\\"false\\\" style=\\\"color: #f66744\\\"></span>&nbsp;Resources</h2>\\n\\n<p>\\n<a class=\\\"pix-note-discord\\\" href=\\\"https://discord.com/invite/gggpkVgBf3\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">Join Discord</a>&nbsp;\\n<a class=\\\"pix-note-yt\\\" href=\\\"https://www.youtube.com/@pixaroma\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">Pixaroma YouTube Channel</a>&nbsp;\\n</p>\",\"buttonColor\":\"#f66744\",\"lineColor\":\"#f66744\",\"width\":541.8920531378121,\"height\":556,\"backgroundColor\":\"#2a2a2a\"}",
+        ""
+      ],
+      "color": "#1d1d1d",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 235,
+      "type": "PixaromaVideoPrompt",
+      "pos": [
+        -1025.5086369718952,
+        223.3824473224962
+      ],
+      "size": [
+        422.3242508980886,
+        556
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "first_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "last_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "frames",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "seconds",
+          "type": "FLOAT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "c1aaee4f6a41a69563eab50e51cd1ef7347f22e9",
+        "Node name for S&R": "PixaromaVideoPrompt",
+        "videoPromptState": {
+          "idea": "a beautiful woman vlog, closeup, smiling",
+          "tier_index": 1,
+          "tier_name": "8 seconds",
+          "seed": 0,
+          "model": "qwen3-vl-8b-heretic-1.3.0_fp8_e4m3fn.safetensors",
+          "clip_type": "minimax",
+          "temperature": 0.3,
+          "max_length": 512,
+          "top_k": 64,
+          "top_p": 0.95,
+          "min_p": 0.05,
+          "repetition_penalty": 1.05,
+          "presence_penalty": 0,
+          "thinking": false,
+          "use_default_template": true,
+          "release_model": false,
+          "length_block": true,
+          "fps": 24,
+          "step": 17,
+          "plus": 5,
+          "min_frames": 5,
+          "seed_mode": "fixed",
+          "speech_hint": true,
+          "idea_share": 0.32
+        }
+      },
+      "widgets_values": [],
+      "color": "#1d1d1d",
+      "bgcolor": "#2a2a2a"
+    },
+    {
+      "id": 198,
+      "type": "PixaromaLabel",
+      "pos": [
+        -1610.0066125873575,
+        113.22003555278141
+      ],
+      "size": [
+        620,
+        51
+      ],
+      "flags": {
+        "no_title": true
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-Pixaroma",
+        "ver": "80b307e8d1882fd933959cb0ea94a26d143557b5",
+        "Node name for S&R": "PixaromaLabel",
+        "aux_id": "pixaroma/ComfyUI-Pixaroma"
+      },
+      "widgets_values": [
+        "{\"text\":\"Minimax H3 Text 2 Video Prompt Generator\",\"fontSize\":31,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#f66744\",\"padding\":10,\"borderRadius\":0,\"opacity\":1,\"fontWeight\":\"normal\",\"lineHeight\":1}"
+      ],
+      "color": "rgba(0,0,0,0)",
+      "bgcolor": "rgba(0,0,0,0)"
+    }
+  ],
+  "links": [],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9562188375110988,
+      "offset": [
+        1963.3548435571518,
+        123.38423255044906
+      ]
+    },
+    "frontendVersion": "1.48.7",
+    "node_versions": {
+      "ComfyUI-GGUF": "8098c7149fa4ff14991eb3347a5585051ceeafbe",
+      "comfy-core": "v0.3.10-37-gd055325",
+      "rgthree-comfy": "5d771b8b56a343c24a26e8cea1f0c87c3d58102f"
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "workflowRendererVersion": "LG"
+  },
+  "version": 0.4
+}

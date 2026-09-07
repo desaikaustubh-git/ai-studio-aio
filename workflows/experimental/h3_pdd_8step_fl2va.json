@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "title": "H3 PDD 8-Step (Alibaba PAI Acc adapter) - single-pass FL2VA/T2V + audio",
+    "status": "NEW / experimental - does not touch any existing workflow",
+    "what": "MiniMax H3 accelerated with Alibaba PAI's PDD (Phased Distribution Distillation) 8-step 'Acc' adapter instead of the lightx2v turbo LoRA. PDD's 32 trained time intervals are fused 4-at-a-time into 8 joint audio+video model forwards. The MiniMaxH3PDD8StepSetupT8Advanced node emits the MODEL, SAMPLER and SIGMAS as one bundle on a fixed contract (euler / simple / 8 NFE / video shift 12 / audio shift 3 / CFG 1, adapter strength 1.0) - so there is no SigmaShift, KSamplerSelect or BasicScheduler node in this graph, and NO other LoRA may be stacked.",
+    "requires": [
+      "1) ENABLE the T8 node pack: rename  custom_nodes/comfyui-minimax-h3-audio-T8.disabled  ->  custom_nodes/comfyui-minimax-h3-audio-T8  and restart ComfyUI. (It was parked as .disabled on 2026-09-01 as a large, less-vetted ~200-file pack - see workflows/h3_allinone_2stage_latentupscale.md. Only the PDD setup node is needed here.)",
+      "2) DOWNLOAD the PDD adapter into models/loras/ :  MiniMax-H3-FL2VA-Acc-8Step_comfyui_pdd.safetensors  (Ref2VA variant: MiniMax-H3-Ref2VA-Acc-8Step_comfyui_pdd.safetensors). Source: Alibaba PAI / the T8 pack's model list.",
+      "3) DOWNLOAD the FULL non-pruned base into models/diffusion_models/ :  minimax_h3_fl2va_int8_convrot.safetensors . The pruned convrot file this box already has (minimax_h3_fl2va_pruned_int8_convrot.safetensors) will NOT satisfy the PDD adapter - it expects the 258-block backbone + 4 dynamic output heads + AdaLN width 2688 of the full build."
+    ],
+    "vs_current_pipeline": "The v22 CCTV pipeline uses AIStudioH3MultiShotRender's core recipe (turbo LoRA @1.0 + realism LoRA @0.9, 8 steps euler/simple, sigma_shift 6/3). This is the same 8-step budget but via a purpose-trained distillation schedule rather than a naive BasicScheduler(8) over a 4-step turbo LoRA - it is the 'proper PDD-aware split' referenced in h3_allinone_2stage_latentupscale.md as the fix for that path's checkerboard corruption. Expect different motion/skin character; A/B against v22.",
+    "t2v_vs_fl2v": "As wired = FL2V (node 11 LoadImage -> node 12 resize -> node 20 first_frame). Pure T2V: delete the link into node 20 first_frame, or set nodes 11+12 to Bypass. First+last frame: add a second LoadImage+ImageResizeKJv2 into node 20 last_frame.",
+    "knobs": "node 20 prompt ; node 20 + node 12 width/height (keep matched) ; node 20 length (17k+5 grid) ; node 8 widget 3 = adapter strength (official 1.0 - do not change without a separately trained contract). Start small: 736x416 x124 serial on 16 GB. Steps/scheduler/shift are locked by the PDD node - do not add nodes to override them.",
+    "verify_after_enabling_pack": "node 8's three widget input keys (adapter_name / variant / strength) are inferred from the pack's own tools/build_pdd_workflows.py (frontend widgets_values = [filename, variant, 1.0]). After enabling the T8 pack, open http://127.0.0.1:8188/object_info and confirm the exact required-input key names for MiniMaxH3PDD8StepSetupT8Advanced; rename here if they differ.",
+    "format": "API-format graph. Drag onto the ComfyUI canvas (0.31.0 offers to import) or Workflow > Open."
+  },
+
+  "1":  {"class_type": "UNETLoader", "inputs": {"unet_name": "minimax_h3_fl2va_int8_convrot.safetensors", "weight_dtype": "default"}},
+  "2":  {"class_type": "CLIPLoader", "inputs": {"clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors", "type": "minimax"}},
+  "3":  {"class_type": "VAELoader", "inputs": {"vae_name": "minimax_h3_video_vae_fp16.safetensors"}},
+  "4":  {"class_type": "VAELoader", "inputs": {"vae_name": "minimax_h3_audio_vae_fp32.safetensors"}},
+
+  "11": {"class_type": "LoadImage", "inputs": {"image": "example.png"}},
+  "12": {"class_type": "ImageResizeKJv2", "inputs": {"image": ["11", 0], "width": 768, "height": 1344, "upscale_method": "lanczos", "keep_proportion": "crop", "pad_color": "0, 0, 0", "crop_position": "center", "divisible_by": 32}},
+
+  "20": {"class_type": "MiniMaxH3ImageToVideo", "inputs": {
+    "clip": ["2", 0], "vae": ["3", 0],
+    "prompt": "integrated_multimodal_description: Cinematic live-action, slow push-in, dim interior. The same adult woman from the first frame sits at a wooden table by a rain-streaked window, warm lamplight on one side of her face. At 00:02 she turns her head a few degrees toward the window and blinks once. At 00:04 she lifts a cup with both hands and holds it near her chin, steam rising. The camera pushes in very slowly and stops. She says clearly, once: What time did you say the last train leaves? overall_soundscape: steady rain on the glass, a low room-tone hum, the small ceramic click of the cup on the saucer, distant muffled street noise. non_diegetic_music: a sparse warm piano figure, a few notes, soft felt tone, no percussion, holding under the line.",
+    "width": 768, "height": 1344, "length": 124,
+    "first_frame": ["12", 0]
+  }},
+
+  "8":  {"class_type": "MiniMaxH3PDD8StepSetupT8Advanced", "inputs": {
+    "model": ["1", 0], "av_latent": ["20", 1],
+    "adapter_name": "MiniMax-H3-FL2VA-Acc-8Step_comfyui_pdd.safetensors",
+    "variant": "FL2VA",
+    "strength": 1.0
+  }},
+
+  "21": {"class_type": "BasicGuider", "inputs": {"model": ["8", 0], "conditioning": ["20", 0]}},
+  "23": {"class_type": "RandomNoise", "inputs": {"noise_seed": 0}},
+
+  "30": {"class_type": "SamplerCustomAdvanced", "inputs": {"noise": ["23", 0], "guider": ["21", 0], "sampler": ["8", 1], "sigmas": ["8", 2], "latent_image": ["20", 1]}},
+
+  "61": {"class_type": "VAEDecode", "inputs": {"samples": ["30", 0], "vae": ["3", 0]}},
+  "62": {"class_type": "VAEDecodeAudio", "inputs": {"samples": ["30", 0], "vae": ["4", 0]}},
+
+  "70": {"class_type": "PixaromaSaveMp4", "inputs": {"video_frames": ["61", 0], "fps": 24.0, "filename_prefix": "h3_pdd_8step_fl2va", "save_mode": "save", "trim_to_audio": true, "audio": ["62", 0]}}
+}
